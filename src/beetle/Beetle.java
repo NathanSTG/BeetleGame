@@ -75,7 +75,7 @@ public class Beetle {
 		if(head){
 			//Feelers
 			if(feelers >= 1) { sb.append("\\"); }
-			if(feelers == 2) { sb.append(feelers == 1 ? " /" : "  /"); }
+			if(feelers == 2) { sb.append(feelers >= 1 ? " /" : "  /"); }
 			sb.append("\n");
 			
 			//eyes
