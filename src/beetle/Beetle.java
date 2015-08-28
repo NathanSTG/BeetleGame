@@ -8,6 +8,8 @@ public class Beetle {
 	private int legs;
 	private boolean tail;
 	
+	private int rollCount;
+
 	public Beetle(){
 		body = false;
 	}
@@ -62,6 +64,14 @@ public class Beetle {
 	
 	public boolean isComplete(){
 		return body && head && (eyes == 2) && (feelers == 2) && (legs == 6) && tail;
+	}
+	
+	public int getRollCount() {
+		return rollCount;
+	}
+	
+	public void incrementRollCount(){
+		rollCount++;
 	}
 	
 	public String toString(){

@@ -36,13 +36,16 @@ public class BeetleGame {
 				}
 			}
 		}
-
+		
 		System.out.println("=============================================");
 		System.out.println("Player " + player + " wins!!!");
+		System.out.println(bug);
 		System.out.println("=============================================");
 	}
 	
 	public boolean takeTurn(int player, Beetle bug){
+		boolean takeAnotherTurn = false;
+		
 		System.out.println("=============================================");
 		System.out.println("\nPlayer " + player + ", your beetle:");
 		System.out.println(bug);
@@ -50,27 +53,38 @@ public class BeetleGame {
 		
 		INPUT.nextLine();
 		die.roll();
+		bug.incrementRollCount();
 		System.out.println("You rolled a " + die.getTopFace());
+		
 		
 		switch(die.getTopFace()){
 		case 1:
 			System.out.println(" (body)");
-			return bug.addBody();
+			takeAnotherTurn = bug.addBody();
+			break;
 		case 2:
 			System.out.println(" (head)");
-			return bug.addHead();
+			takeAnotherTurn = bug.addHead();
+			break;
 		case 3:
 			System.out.println(" (leg)");
-			return bug.addLeg();
+			takeAnotherTurn = bug.addLeg();
+			break;
 		case 4:
 			System.out.println(" (eye)");
-			return bug.addEye();
+			takeAnotherTurn = bug.addEye();
+			break;
 		case 5:
 			System.out.println(" (feeler)");
-			return bug.addFeeler();
+			takeAnotherTurn = bug.addFeeler();
+			break;
 		default:
 			System.out.println(" (tail)");
-			return bug.addTail();
+			takeAnotherTurn = bug.addTail();
+			break;
 		}
+		
+		System.out.println("Roll Count: " + bug.getRollCount());
+		return takeAnotherTurn;
 	}
 }
