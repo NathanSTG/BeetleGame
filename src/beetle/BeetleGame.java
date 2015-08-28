@@ -17,8 +17,23 @@ public class BeetleGame {
 	
 	public static void main(String[] args){
 		System.out.println("Welcome to Beetle.");
-		BeetleGame game = new BeetleGame();
-		game.play();
+		do{
+			BeetleGame game = new BeetleGame();
+			game.play();
+		}while(promptPlayAgain());
+	}
+	
+	public static boolean promptPlayAgain(){
+		System.out.println("\nPlay again? ");
+		return isYes(INPUT.nextLine());
+	}
+	
+	public static boolean isYes(String s){
+		s = s.toUpperCase();
+		if(s.equals("Y") || s.equals("YES")){
+			return true;
+		}
+		return false;
 	}
 	
 	public void play(){
