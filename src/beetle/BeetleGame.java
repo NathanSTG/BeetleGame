@@ -4,75 +4,90 @@ import java.util.Scanner;
 
 public class BeetleGame {
 	public static final Scanner INPUT = new Scanner(System.in);
-	
-	private Beetle bug1, bug2;
-	
+
+	private Beetle[] bugs;
+
 	private Die die;
 	
-	public BeetleGame(){
-		bug1 = new Beetle();
-		bug2 = new Beetle();
+	private int numPlayers;
+
+	public BeetleGame(int numPlayers) {
+		this.numPlayers = numPlayers;
+		initBeetles();
+		//create die
 		die = new Die();
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		System.out.println("Welcome to Beetle.");
-		do{
-			BeetleGame game = new BeetleGame();
+		int playerCount;
+		
+		do {
+			//Get number of players
+			do{
+
+				System.out.print("How many players will be playing? (1-4):");
+				playerCount = INPUT.nextInt();
+			}while(playerCount < 1 && playerCount > 4);
+			
+			//Play game
+			BeetleGame game = new BeetleGame(playerCount);
 			game.play();
-		}while(promptPlayAgain());
+		} while (promptPlayAgain());
 	}
-	
-	public static boolean promptPlayAgain(){
+
+	public static boolean promptPlayAgain() {
 		System.out.println("\nPlay again? ");
 		return isYes(INPUT.nextLine());
 	}
-	
-	public static boolean isYes(String s){
+
+	public static boolean isYes(String s) {
 		s = s.toUpperCase();
-		if(s.equals("Y") || s.equals("YES")){
+		if (s.equals("Y") || s.equals("YES")) {
 			return true;
 		}
 		return false;
 	}
 	
-	public void play(){
-		int player = 1;
-		Beetle bug = bug1;
+	private void initBeetles(){
+		bugs = new Beetle[numPlayers];
+		for(int i = 0; i < numPlayers; i++){
+			bugs[i] = new Beetle();
+		}
+	}
+
+	public void play() {
+		LimitedIncrementer incrementer = new LimitedIncrementer(0, numPlayers - 1);
+		int player = incrementer.getAndIncrement();
+		Beetle bug = bugs[player];		
 		
-		while(!bug.isComplete()){
-			if(!takeTurn(player, bug)){
-				if(player == 1){
-					player = 2;
-					bug = bug2;
-				}else{
-					player = 1;
-					bug = bug1;
-				}
+		while (!bug.isComplete()) {
+			if (!takeTurn(player, bug)) {
+				player = incrementer.getAndIncrement();
+				bug = bugs[player];
 			}
 		}
-		
+
 		System.out.println("=============================================");
-		System.out.println("Player " + player + " wins!!!");
+		System.out.println("Player " + (player + 1) + " wins!!!");
 		System.out.println(bug);
 		System.out.println("=============================================");
 	}
-	
-	public boolean takeTurn(int player, Beetle bug){
+
+	public boolean takeTurn(int player, Beetle bug) {
 		boolean takeAnotherTurn = false;
-		
+
 		System.out.println("=============================================");
-		System.out.println("\nPlayer " + player + ", your beetle:");
+		System.out.println("\nPlayer " + (player + 1) + ", your beetle:");
 		System.out.println(bug);
 		System.out.print("Enter to roll: ");
-		
+
 		INPUT.nextLine();
 		die.roll();
 		bug.incrementRollCount();
 		System.out.println("You rolled a " + die.getTopFace());
-		
-		
-		switch(die.getTopFace()){
+
+		switch (die.getTopFace()) {
 		case 1:
 			System.out.println(" (body)");
 			takeAnotherTurn = bug.addBody();
@@ -98,7 +113,7 @@ public class BeetleGame {
 			takeAnotherTurn = bug.addTail();
 			break;
 		}
-		
+
 		System.out.println("Roll Count: " + bug.getRollCount());
 		return takeAnotherTurn;
 	}
