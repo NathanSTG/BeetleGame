@@ -77,13 +77,15 @@ public class Beetle {
 	}
 	
 	public String formatRolls(Vector<Integer> rolls){
-		String chars = "";
+		String result = "";
 		
 		for(int i = 0; i < rolls.size(); i++){
-			chars += rolls.elementAt(i);
+			result += rolls.elementAt(i);
+			if(i != rolls.size() - 1){
+				result += ",";
+			}
 		}
-		
-		return String.join(",", chars.split(""));
+		return result;
 	}
 	
 	public String toString(){
