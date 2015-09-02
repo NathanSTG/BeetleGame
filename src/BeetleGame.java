@@ -1,5 +1,3 @@
-package beetle;
-
 import java.util.Scanner;
 
 public class BeetleGame {

@@ -1,5 +1,3 @@
-package beetle;
-
 import java.util.Vector;
 
 public class Beetle {

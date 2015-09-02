@@ -1,5 +1,3 @@
-package beetle;
-
 public class Die {
 	private int topFace;
 	

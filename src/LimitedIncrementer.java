@@ -1,5 +1,3 @@
-package beetle;
-
 /**
  * Represents an integer that increments within a range of values,
  * resetting to the lower limit after the higher limit is reached.
