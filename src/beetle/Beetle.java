@@ -1,5 +1,7 @@
 package beetle;
 
+import java.util.Vector;
+
 public class Beetle {
 	private boolean body;
 	private int eyes;
@@ -8,7 +10,7 @@ public class Beetle {
 	private int legs;
 	private boolean tail;
 	
-	private int rollCount;
+	private Vector<Integer> rolls = new Vector<Integer>();
 
 	public Beetle(){
 		body = false;
@@ -67,18 +69,32 @@ public class Beetle {
 	}
 	
 	public int getRollCount() {
-		return rollCount;
+		return rolls.size();
 	}
 	
-	public void incrementRollCount(){
-		rollCount++;
+	public void addRoll(int roll){
+		rolls.add(roll);
+	}
+	
+	public String formatRolls(Vector<Integer> rolls){
+		String chars = "";
+		
+		for(int i = 0; i < rolls.size(); i++){
+			chars += rolls.elementAt(i);
+		}
+		
+		return String.join(",", chars.split(""));
 	}
 	
 	public String toString(){
-		if(!body){
-			return "(no parts yet)";
-		}
+
 		StringBuilder sb = new StringBuilder();
+		if(!body){
+			sb.append("(no parts yet)");
+			sb.append("\n\nRoll Count: " + rolls.size());
+			sb.append("\n     Rolls: " + formatRolls(rolls));
+			return sb.toString();
+		}
 		
 		
 		//Head
@@ -119,6 +135,9 @@ public class Beetle {
 		if(tail) {
 			sb.append("\n v");
 		}
+		
+		sb.append("\n\nRoll Count: " + rolls.size());
+		sb.append("\nRolls: " + formatRolls(rolls));
 		
 		return sb.toString();
 	}
