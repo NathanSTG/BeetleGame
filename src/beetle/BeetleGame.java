@@ -84,7 +84,7 @@ public class BeetleGame {
 
 		INPUT.nextLine();
 		die.roll();
-		bug.incrementRollCount();
+		bug.addRoll(die.getTopFace());
 		System.out.println("You rolled a " + die.getTopFace());
 
 		switch (die.getTopFace()) {
@@ -113,8 +113,7 @@ public class BeetleGame {
 			takeAnotherTurn = bug.addTail();
 			break;
 		}
-
-		System.out.println("Roll Count: " + bug.getRollCount());
+		
 		return takeAnotherTurn;
 	}
 }
